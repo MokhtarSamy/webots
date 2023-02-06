@@ -1,0 +1,36 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/robots/k-team/khepera2/protos/Khepera2.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/lights/protos/ConstructionLamp.proto"
+IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/robots/kinematics/tinkerbots/protos/TinkerbotsLightSensor.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.3843998839762707 0.48448539489185605 -0.7858184468027664 1.3309069042745745
+  position -0.5178065566889966 0.8908862500624417 0.9456860659367251
+  follow "Khepera II"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+}
+Khepera2 {
+  translation 0.10012970289564556 -0.024799631537291648 0
+  rotation 0 0 1 2.87979
+  controllerArgs [
+    ""
+  ]
+}
+ConstructionLamp {
+  translation -0.48 -0.23 0.0699998
+  rotation 0 1 0 4.692820414042842e-06
+  spotLightIntensity 3
+  spotLightRadius 110
+  spotLightCastShadows TRUE
+}
