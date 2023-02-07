@@ -5,7 +5,7 @@ ENV PACKAGES_DEV="\
     linux-headers \
     "
 RUN apk add --virtual build-deps $PACKAGES_DEV \
-    &&pip install --no-cache-dir sockets \
+    &&pip install --no-cache-dir Flask \
     && apk del build-deps \
     && rm -rf /var/cache/apk/*
 

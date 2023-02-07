@@ -9,7 +9,12 @@ services:
   suivrelumieres:
     image: suivrelumieres
     restart: always
-    links:
-      - coordination
+    network_mode: host
     ports:
       - 5100:5100
+  evitementobstacles:
+    image: evitementobstacles
+    restart: always
+    network_mode: host
+    ports:
+      - 5200:5200

@@ -4,8 +4,12 @@ ENV PACKAGES_DEV="\
     build-base \
     linux-headers \
     "
+ENV PIP="\
+    sockets\
+    requests\
+    "
 RUN apk add --virtual build-deps $PACKAGES_DEV \
-    &&pip install --no-cache-dir sockets \
+    &&pip install --no-cache-dir $PIP \
     && apk del build-deps \
     && rm -rf /var/cache/apk/*
 
