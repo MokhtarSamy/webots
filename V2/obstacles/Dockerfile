@@ -11,7 +11,7 @@ RUN apk add --virtual build-deps $PACKAGES_DEV \
 
 WORKDIR /app
 
-COPY mecanismeDeCoordination.py .
+COPY evitementObstacles.py .
 
 ENTRYPOINT ["python3"]
-CMD ["mecanismeDeCoordination.py"]
+CMD ["evitementObstacles.py"]

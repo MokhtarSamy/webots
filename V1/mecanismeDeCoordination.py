@@ -1,6 +1,10 @@
 import json
 import socket
 
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sockLumieres = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sockObstacles = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
 class Algorithm:
 
@@ -15,14 +19,36 @@ class EvitementObstacles(Algorithm):
     name = "EvitementObstacles"
 
     def run(self, sensorValues):
-        return 5, 5
+        sockObstacles.connect(("host.docker.internal", 5200))
+        sensorValues = json.dumps(sensorValues)
+        sockObstacles.sendall(sensorValues.encode(encoding='utf-8'))
+
+        #client, addr = sockObstacles.accept()
+        #sockObstacles.bind(("host.docker.internal", 5200))
+        #conn, addr = sockObstacles.accept()
+        data = sockObstacles.recv(1024)
+        dataString = data.decode()
+        data = json.loads(dataString)
+        print("data obstacles: ", data)
+        return data
 
 
 class SuivreLumieres(Algorithm):
     name = "SuivreLumieres"
 
     def run(self, sensorValues):
-        return 5, 5
+        sockLumieres.connect(("host.docker.internal", 5100))
+        sensorValues = json.dumps(sensorValues)
+        sockLumieres.sendall(sensorValues.encode(encoding='utf-8'))
+
+        #client, addr = sockObstacles.accept()
+        #sockObstacles.bind(("host.docker.internal", 5200))
+        #conn, addr = sockObstacles.accept()
+        data = sockLumieres.recv(1024)
+        dataString = data.decode()
+        data = json.loads(dataString)
+        print("data lumieres: ", data)
+        return data
 
 
 class SubsumptionArchitecture:
@@ -55,9 +81,7 @@ class SubsumptionArchitecture:
 
 def get_sensor_values(host, port):
     # Create a TCP/IP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    print('Connecting to {} port {}'.format(host, port))
     sock.connect((host, port))
     print('Connected to {} port {}'.format(host, port))
     try:

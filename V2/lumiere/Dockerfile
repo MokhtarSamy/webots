@@ -11,7 +11,7 @@ RUN apk add --virtual build-deps $PACKAGES_DEV \
 
 WORKDIR /app
 
-COPY mecanismeDeCoordination.py .
+COPY suivreLumieres.py .
 
 ENTRYPOINT ["python3"]
-CMD ["mecanismeDeCoordination.py"]
+CMD ["suivreLumieres.py"]

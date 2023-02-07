@@ -1,6 +1,10 @@
 import json
 import socket
 
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sockLumieres = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sockObstacles = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
 class Algorithm:
 
@@ -15,14 +19,42 @@ class EvitementObstacles(Algorithm):
     name = "EvitementObstacles"
 
     def run(self, sensorValues):
-        return 5, 5
+        sockObstacles.connect(("host.docker.internal", 5200))
+        sensorValues = json.dumps(sensorValues)
+        sockObstacles.sendall(sensorValues.encode(encoding='utf-8'))
+        print(" JE SUIS ICI ")
+        #client, addr = sockObstacles.accept()
+        #sockObstacles.bind(("host.docker.internal", 5200))
+        #conn, addr = sockObstacles.accept()
+        data = sockObstacles.recv(1024)
+        dataString = data.decode()
+        data = json.loads(dataString)
+        print("data obstacles: ", data)
+        return data
 
 
 class SuivreLumieres(Algorithm):
     name = "SuivreLumieres"
 
     def run(self, sensorValues):
-        return 5, 5
+        #sockLumieres.connect(("suivrelumieres", 5100))
+        sockLumieres.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        sockLumieres.bind(("host.docker.internal", 5000))
+        sockLumieres.settimeout(30000)
+        sockLumieres.listen(1)
+        conn, addr = sockLumieres.accept()
+        data = None
+        if conn:
+            print(" JE SUIS LA ")
+            sensorValues = json.dumps(sensorValues)
+            sockLumieres.sendall(sensorValues.encode(encoding='utf-8'))
+            #client, addr = sockObstacles.accept()
+            #sockObstacles.bind(("host.docker.internal", 5200))
+            data = sockLumieres.recv(1024)
+            dataString = data.decode()
+            data = json.loads(dataString)
+            print("data lumieres: ", data)
+        return data
 
 
 class SubsumptionArchitecture:
@@ -55,28 +87,21 @@ class SubsumptionArchitecture:
 
 def get_sensor_values(host, port):
     # Create a TCP/IP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    print('Connecting to {} port {}'.format(host, port))
     sock.connect((host, port))
     print('Connected to {} port {}'.format(host, port))
-    try:
-        # Receive sensor values
-        data = sock.recv(1024)
-        dataString = data.decode()
-        print("dataString: ", dataString)
-        data = json.loads(dataString)
-        lightValues = data['light']
-        distanceValues = data['distance']
+    # Receive sensor values
+    data = sock.recv(1024)
+    dataString = data.decode()
+    print("dataString: ", dataString)
+    data = json.loads(dataString)
+    lightValues = data['light']
+    distanceValues = data['distance']
 
-        #sensor_values = data.decode().replace('[', '').replace(']','').split(',')
-        #for value in sensor_values:
-        #   light.append(float(value[0]))
-        #distance = float(sensor_values[1])
-        return lightValues, distanceValues
-    finally:
-        print('Closing socket')
-        sock.close()
+    #sensor_values = data.decode().replace('[', '').replace(']','').split(',')
+    #for value in sensor_values:
+    #   light.append(float(value[0]))
+    #distance = float(sensor_values[1])
+    return lightValues, distanceValues
 
 
 def main():

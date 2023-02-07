@@ -1,4 +1,10 @@
+import json
+import socket
+
 max_speed = 10
+port = 5000
+host = "coordination"
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
 def suivreLumiere(sensorValues, max_speed):
@@ -28,3 +34,23 @@ def suivreLumiere(sensorValues, max_speed):
         left_wheel_speed = max_speed * 0.5
         right_wheel_speed = max_speed
     return left_wheel_speed, right_wheel_speed
+
+
+def connect():
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.bind((host, port))
+    s.settimeout(30000)
+    s.listen()
+
+
+def sendSpeed():
+    s.connect((host, port))
+    conn, addr = s.accept()
+    data = conn.recv(1024)
+    sensorValues = json.dumps(data)
+    speed = suivreLumiere(sensorValues, max_speed)
+    conn.sendall(speed)
+
+
+#connect()
+sendSpeed()

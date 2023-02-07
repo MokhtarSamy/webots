@@ -102,7 +102,6 @@ left_wheel.setVelocity(0.0)
 right_wheel.setVelocity(0.0)
 
 max_speed = left_wheel.getMaxVelocity()
-print("MAXX", max_speed)
 speed_unit = 7
 rangeSensor = distanceSensors[0].getMaxValue()
 #print(f"{max_speed = } | {sensor_range = }
@@ -116,9 +115,7 @@ port = 10020
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = "127.0.0.1"
 
-
 def startup():
-    # -- Called during worker process start up sequence
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((host, port))
     s.settimeout(30000)
