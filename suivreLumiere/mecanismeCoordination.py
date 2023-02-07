@@ -91,32 +91,7 @@ class SubsumptionArchitecture:
                 break
 
 
-def get_sensor_values(host, port):
-    # Create a TCP/IP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    print('Connecting to {} port {}'.format(host, port))
-    sock.connect((host, port))
-
-    try:
-        # Send request for sensor values
-        '''message = 'REQUEST_SENSOR_VALUES'
-        message = message.encode('utf-8')
-        print('Sending: {}'.format(message))
-        sock.send(message)'''
-        # Receive sensor values
-        data = sock.recv(1024)
-        dataString = data.decode()
-        lightSensorValues = json.loads(dataString)
-        #sensor_values = data.decode().replace('[', '').replace(']','').split(',')
-        #for value in sensor_values:
-        #   light.append(float(value[0]))
-        #distance = float(sensor_values[1])
-        print('Received: {}'.format(lightSensorValues))
-        return lightSensorValues
-    finally:
-        print('Closing socket')
-        sock.close()
+v
 
 
 def main():
