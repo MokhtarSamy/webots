@@ -10,6 +10,8 @@ def updateSensor():
     global sensorValues
     data = request.get_data()
     sensorValues = data.decode('utf-8')
+    print("GLOBAL", sensorValues)
+    return sensorValues
 
 
 weight_matrix = [[-2, 4], [-3, 5], [-7, 7], [7, -6], [5, -4], [4, -2],
@@ -26,11 +28,11 @@ def bound(x, a, b):
 def avoid_obstacles():
     global sensorValues
     speed = [0.0, 0.0]
-    print(sensorValues)
+    print(" VALUES S S ", sensorValues)
     for i in range(2):
         for j in range(8):
             speed[i] += speed_unit * weight_matrix[j][i] * (
-                1.0 - (sensorValues[j] / 1023))
+                1.0 - (int(sensorValues[j]) / int(1023)))
         speed[i] = bound(speed[i], -max_speed, max_speed)
     if min(speed[0], speed[1]) < 0:
         speed[0] = -max_speed
@@ -39,4 +41,4 @@ def avoid_obstacles():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5200)
+    app.run(host='0.0.0.0', port=5200)
