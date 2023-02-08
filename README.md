@@ -8,7 +8,7 @@ Ensuite, dans le dossier V2, vous trouverez trois dossiers correspondant à chaq
 
 Une fois que les conteneurs sont lancés et que le serveur tourne sur Webots, une connexion sera établie automatiquement et le robot commencera à bouger.
 
-Vous trouverez égalemet une vidéo dans le dossier V1 pour une démonstration de l'évitement des obstacles, cela est fait avec le troisième controlleur "coordination_controller.py" que lui aussi est pour la partie 1 mais avec quelques différences avec les paramètres que "controllerV1".
+Vous trouverez égalemet une vidéo dans le dossier V1 pour une démonstration de l'évitement des obstacles, cela est fait avec le troisième controlleur "coordination_controller.py" que lui aussi est pour la partie 1 mais avec quelques différences dans les paramètres que "controllerV1".
 
 ## V1
 
