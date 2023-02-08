@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -9,8 +10,7 @@ sensorValues = []
 def updateSensor():
     global sensorValues
     data = request.get_data()
-    sensorValues = data.decode('utf-8')
-    print("GLOBAL", sensorValues)
+    sensorValues = json.loads(data.decode('utf-8'))
     return sensorValues
 
 
@@ -28,7 +28,6 @@ def bound(x, a, b):
 def avoid_obstacles():
     global sensorValues
     speed = [0.0, 0.0]
-    print(" VALUES S S ", sensorValues)
     for i in range(2):
         for j in range(8):
             speed[i] += speed_unit * weight_matrix[j][i] * (

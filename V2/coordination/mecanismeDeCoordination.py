@@ -20,11 +20,10 @@ class EvitementObstacles(Algorithm):
         url = "http://127.0.0.1:5200/sensor"
         data = json.dumps(sensorValues)
         headers = {'Content-Type': 'application/json'}
-        print("DATA BEFORE", data)
         requests.post(url, data=data, headers=headers)
         request = requests.get('http://127.0.0.1:5200/speed')
-        print("SPEEDOBSTACKES ", request)
-        return request
+        result = request.json()
+        return 8, 8
 
 
 class SuivreLumieres(Algorithm):
@@ -32,18 +31,11 @@ class SuivreLumieres(Algorithm):
 
     def run(self, sensorValues):
         url = "http://127.0.0.1:5100/sensor"
-        data = {"key1": "value1", "key2": "value2"}
         headers = {'Content-Type': 'application/json'}
-
         data = json.dumps(sensorValues)
-        print(
-            "DATA BEFORE",
-            data,
-        )
         requests.post(url, data=data, headers=headers)
         request = requests.get("http://127.0.0.1:5100/speed")
-        print("SPEED ", request.json().get("left"))
-        return request.json().get("left"), request.json().get("right")
+        return 8, 8
 
 
 class SubsumptionArchitecture:
@@ -88,7 +80,8 @@ def main():
         data = json.loads(dataString)
         lightValues = data['light']
         distanceValues = data['distance']
-        sa.run(lightValues, distanceValues)
+        speeds = sa.run(lightValues, distanceValues)
+        sock.sendall(json.dumps(speeds).encode())
 
 
 main()

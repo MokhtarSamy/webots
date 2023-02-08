@@ -24,6 +24,7 @@ ConstructionLamp {
 Khepera2 {
   translation 0.0805682 0.366488 0
   rotation 0 0 1 3.06936
+  controller "controllerV2"
   controllerArgs [
     ""
   ]

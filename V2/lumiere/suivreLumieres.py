@@ -17,7 +17,7 @@ def updateSensor():
 @app.route('/speed', methods=['GET'])
 def suivreLumiere():
     global sensorValues
-    sensorValues = sensorValues.tolist()
+    sensorValues = sensorValues
     max_speed = 10
     max_light_index = max(sensorValues)
     left_wheel_speed = 0
